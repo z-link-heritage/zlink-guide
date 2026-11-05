@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Z-LINK 有料会員のはじめ方</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: 1本の縦の道筋。各ステップ＝説明（左）＋画面の見本（右）、スマホでは縦に積む */
+:root{
+  --bg:#fbf8f4;
+  --surface:#ffffff;
+  --ink:#2a1a1c;
+  --muted:#6f5f61;
+  --line:#e8dcd6;
+  --crimson:#c8102e;
+  --crimson-ink:#ffffff;
+  --gold:#a77b1f;
+  --gold-soft:#f7efdd;
+  --pink-soft:#fdeef0;
+  --mock:#f4efeb;
+  --font-display:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;
+  --font-body:"Noto Sans JP","Hiragino Sans","Yu Gothic","Meiryo",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#171113;--surface:#221a1c;--ink:#f3eae8;--muted:#b5a5a6;--line:#3a2d30;
+  --crimson:#e8334f;--crimson-ink:#ffffff;--gold:#d9ad55;--gold-soft:#2e2617;--pink-soft:#33191e;--mock:#2a2123;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171113;--surface:#221a1c;--ink:#f3eae8;--muted:#b5a5a6;--line:#3a2d30;
+  --crimson:#e8334f;--crimson-ink:#ffffff;--gold:#d9ad55;--gold-soft:#2e2617;--pink-soft:#33191e;--mock:#2a2123;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.8;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;line-height:1.35;margin:0}
+
+header{padding-block:48px 32px;border-bottom:1px solid var(--line);display:grid;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:900;letter-spacing:.04em}
+.mark{width:34px;height:34px;border-radius:50%;background:var(--crimson);color:var(--crimson-ink);display:grid;place-items:center;font-size:15px}
+header h1{font-size:clamp(28px,5vw,42px);font-weight:900}
+header h1 em{font-style:normal;color:var(--crimson)}
+.lead{color:var(--muted);max-width:40em;margin:0}
+.summary{display:flex;flex-wrap:wrap;gap:8px 20px;margin:0;padding:0;list-style:none;font-size:14px}
+.summary li{display:flex;gap:8px;align-items:baseline}
+.summary b{font-family:var(--font-display);color:var(--gold);font-size:12px;letter-spacing:.08em}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.step{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;padding-block:40px;border-bottom:1px solid var(--line);align-items:start}
+.step-text{display:grid;gap:12px;min-width:0}
+.num{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;color:var(--crimson);font-size:13px;letter-spacing:.12em}
+.num span{width:40px;height:40px;border-radius:50%;border:2px solid var(--crimson);display:grid;place-items:center;font-size:18px;letter-spacing:0;font-weight:900}
+.step h2{font-size:24px;font-weight:900}
+.step p{margin:0}
+.step ul{margin:0;padding-left:1.2em;display:grid;gap:4px}
+.tip{background:var(--gold-soft);border-radius:10px;padding:12px 14px;font-size:14px;color:var(--ink)}
+.tip b{color:var(--gold)}
+.btnname{display:inline-block;background:var(--crimson);color:var(--crimson-ink);border-radius:6px;padding:0 8px;font-weight:700;font-size:.92em;line-height:1.7}
+
+/* 画面の見本 */
+.mock{background:var(--mock);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px;font-size:13px;min-width:0}
+.mock-cap{font-size:11px;letter-spacing:.1em;color:var(--muted);font-weight:700}
+.url{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-family:ui-monospace,Consolas,monospace;font-size:12px;overflow-x:auto;white-space:nowrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:8px}
+.field{display:grid;gap:3px}
+.field label{font-weight:700;font-size:12px}
+.field .in{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--muted)}
+.req{color:var(--crimson)}
+.bigbtn{background:var(--crimson);color:var(--crimson-ink);border-radius:999px;text-align:center;padding:10px;font-weight:700;font-family:var(--font-display)}
+.ghost{text-align:center;color:var(--muted);text-decoration:underline;font-size:12px}
+.invite{border:1px solid var(--gold);background:var(--gold-soft);border-radius:10px;padding:10px 12px;font-weight:700;text-align:center}
+.upg{background:var(--pink-soft);border:1.5px solid var(--crimson);border-radius:12px;padding:14px;display:grid;gap:8px}
+.upg h4{margin:0;color:var(--crimson);font-family:var(--font-display);font-size:14px}
+.upg small{color:var(--muted)}
+.badge{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:0 8px;font-size:11px;background:var(--surface)}
+.stripe{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);border-radius:12px;overflow:hidden;border:1px solid var(--line)}
+.stripe .l{background:var(--crimson);color:var(--crimson-ink);padding:14px;display:grid;align-content:start;gap:4px}
+.stripe .l .price{font-size:24px;font-weight:900;font-family:var(--font-display)}
+.stripe .r{background:var(--surface);padding:12px;display:grid;gap:8px}
+.pay{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pay div{border-radius:6px;text-align:center;padding:6px;font-weight:700;font-size:12px}
+.apple{background:#111;color:#fff}
+.link{background:#00d66f;color:#08311b}
+.or{text-align:center;color:var(--muted);font-size:11px}
+.done{display:grid;place-items:center;gap:6px;text-align:center;padding:20px}
+.check{width:48px;height:48px;border-radius:50%;background:var(--crimson);color:var(--crimson-ink);display:grid;place-items:center;font-size:24px;font-weight:900}
+
+section.after{padding-block:40px 0;display:grid;gap:20px}
+section.after h2{font-size:22px;font-weight:900}
+.qa{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.qa div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:6px;align-content:start}
+.qa h3{font-size:16px;font-weight:700}
+.qa p{margin:0;font-size:14px;color:var(--muted)}
+.contact{font-size:14px;color:var(--muted)}
+.contact a{color:var(--crimson)}
+.sel{user-select:all;font-family:ui-monospace,Consolas,monospace;color:var(--ink)}
+
+@media (max-width:720px){
+  .step{grid-template-columns:minmax(0,1fr);gap:18px;padding-block:32px}
+  .stripe{grid-template-columns:minmax(0,1fr)}
+}
+</style>
+</head>
+<body style="margin:0">
+<div class="wrap">
+<header>
+  <div class="brand"><div class="mark">Z</div>Z-LINK</div>
+  <h1>有料会員の<em>はじめ方</em></h1>
+  <p class="lead">招待リンクを開いてから、有料会員として使いはじめるまでの流れです。全部で5つのステップで、5分ほどで終わります。</p>
+  <ul class="summary">
+    <li><b>料金</b>月額 11,000円（税込）</li>
+    <li><b>支払い</b>クレジットカード・Apple Pay・Link</li>
+    <li><b>使えるまで</b>決済が終わればすぐ</li>
+  </ul>
+</header>
+
+<ol class="steps">
+
+<li class="step">
+  <div class="step-text">
+    <div class="num"><span>1</span>STEP</div>
+    <h2>紹介者から届いた招待リンクを開く</h2>
+    <p>Z-LINK は紹介制です。新しく登録できるのは、紹介者から届いた<b>招待リンク（URL）</b>からだけです。</p>
+    <ul>
+      <li>LINE やメールで届いたURLをタップします</li>
+      <li>画面に「○○さんからの招待」と表示されます</li>
+      <li>登録すると、紹介者と自動でつながります</li>
+    </ul>
+    <p class="tip"><b>招待コードをお持ちの方</b>は、ログイン画面の「招待コードをお持ちの方は入力 →」からも登録できます。</p>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-cap">画面の見本</div>
+    <div class="url">https://www.zipang-link.jp/line/login?ref=＊＊＊＊</div>
+    <div class="card">
+      <div class="invite">🎌「○○ さんからの招待」</div>
+      <div class="field"><label>メールアドレス <span class="req">*</span></label><div class="in">example@mail.com</div></div>
+      <div class="field"><label>パスワード <span class="req">*</span>（8文字以上）</label><div class="in">••••••••</div></div>
+    </div>
+  </div>
+</li>
+
+<li class="step">
+  <div class="step-text">
+    <div class="num"><span>2</span>STEP</div>
+    <h2>メールアドレスとパスワードで会員登録する</h2>
+    <p>招待リンクの画面で、メールアドレスとパスワード（8文字以上）を入れて登録します。</p>
+    <ul>
+      <li>このメールアドレスとパスワードが、次回からのログインに使われます</li>
+      <li>登録すると、利用規約に同意したものとみなされます</li>
+    </ul>
+    <p class="tip"><b>パスワードを忘れたとき</b>は、ログイン画面の「パスワードをお忘れですか？」から再設定できます。</p>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-cap">画面の見本</div>
+    <div class="card">
+      <div class="field"><label>メールアドレス <span class="req">*</span></label><div class="in">example@mail.com</div></div>
+      <div class="field"><label>パスワード <span class="req">*</span>（8文字以上）</label><div class="in">••••••••</div></div>
+      <div class="bigbtn">登録する</div>
+    </div>
+  </div>
+</li>
+
+<li class="step">
+  <div class="step-text">
+    <div class="num"><span>3</span>STEP</div>
+    <h2>基本情報を登録する</h2>
+    <p>はじめてログインすると「ご利用前に基本情報の登録をお願いします」と表示されます。</p>
+    <ul>
+      <li><b>必須</b>は「お名前（本名）」と「電話番号」の2つだけです</li>
+      <li>フリガナ・メールアドレス・住所・職業は、入れなくても登録できます</li>
+      <li>入力したら <span class="btnname">登録してはじめる</span> を押します</li>
+    </ul>
+    <p class="tip"><b>ここで入れた情報は、ほかの会員には公開されません。</b>本人確認・報酬のお振込・大切なご連絡にだけ使われます。</p>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-cap">画面の見本</div>
+    <div class="card">
+      <div class="field"><label>お名前（本名）<span class="req">*</span></label><div class="in">山田 太郎</div></div>
+      <div class="field"><label>フリガナ（任意）</label><div class="in">ヤマダ タロウ</div></div>
+      <div class="field"><label>電話番号 <span class="req">*</span></label><div class="in">090＊＊＊＊＊＊＊＊</div></div>
+      <div class="field"><label>住所・職業（任意）</label><div class="in">選択してください</div></div>
+      <div class="bigbtn">登録してはじめる</div>
+      <div class="ghost">あとで入力する（しばらく表示しません）</div>
+    </div>
+  </div>
+</li>
+
+<li class="step">
+  <div class="step-text">
+    <div class="num"><span>4</span>STEP</div>
+    <h2>「有料会員アップグレード」を押す</h2>
+    <p>ホーム画面に、赤い <span class="btnname">有料会員アップグレード（¥11,000/月（税込））</span> ボタンがあります。</p>
+    <ul>
+      <li>ホーム画面の中ほどの「有料会員アップグレード」の枠の中</li>
+      <li>パソコンでは、左のメニューのいちばん下にも同じボタンがあります</li>
+      <li>どちらを押しても同じです。押すと決済ページに移ります</li>
+    </ul>
+    <p class="tip"><b>今の会員の種類</b>は、ホームの「WELCOME」の帯で確認できます。「無料会員」と出ていれば、まだ有料になっていません。</p>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-cap">画面の見本</div>
+    <div class="upg">
+      <h4>有料会員アップグレード</h4>
+      <small>人脈マップ全体・DM無制限・学習コンテンツ全部などが解放されます。</small>
+      <div class="bigbtn">有料会員アップグレード（¥11,000/月（税込））</div>
+      <small>月額10,000円（税込11,000円）</small>
+    </div>
+    <div class="card" style="grid-template-columns:auto 1fr;align-items:center">
+      <b style="font-size:11px;letter-spacing:.1em;color:var(--gold)">WELCOME</b>
+      <span><span class="badge">ジパニスタ</span> <span class="badge">無料会員</span></span>
+    </div>
+  </div>
+</li>
+
+<li class="step">
+  <div class="step-text">
+    <div class="num"><span>5</span>STEP</div>
+    <h2>決済ページで支払い方法を入れて申し込む</h2>
+    <p>Stripe（ストライプ）という安全な決済ページが開きます。左側に「<b>Z-LINK 有料会員（月額）を定期購入 ¥11,000/月</b>」と出ていることを確かめてください。</p>
+    <ul>
+      <li>支払い方法は <b>Apple Pay</b>・<b>Link</b>・<b>カード</b>（JCB・VISA・Mastercard・Diners）から選べます</li>
+      <li>カードの場合は、メールアドレス・カード番号・有効期限・セキュリティコード（CVC）・カード名義（ローマ字）を入れます</li>
+      <li>「国または地域」は「日本」のままで大丈夫です</li>
+      <li>最後に申込ボタンを押せば完了です</li>
+    </ul>
+    <p class="tip"><b>カード情報は Z-LINK のサイトを通りません。</b>Stripe の決済ページで直接やりとりされます。</p>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-cap">画面の見本</div>
+    <div class="stripe">
+      <div class="l"><span style="font-size:12px;font-weight:700">Z-LINK 有料会員（月額）を定期購入</span><span class="price">¥11,000 <small style="font-size:12px">/月</small></span></div>
+      <div class="r">
+        <div class="pay"><div class="apple"> Pay</div><div class="link">▶ link</div></div>
+        <div class="or">または</div>
+        <div class="field"><label>メールアドレス</label><div class="in">email@example.com</div></div>
+        <div class="field"><label>カード情報</label><div class="in">1234 1234 1234 1234</div></div>
+        <div class="field"><label>カード名義（ローマ字）</label><div class="in">TARO YAMADA</div></div>
+      </div>
+    </div>
+  </div>
+</li>
+
+<li class="step">
+  <div class="step-text">
+    <div class="num"><span>✓</span>完了</div>
+    <h2>有料会員として使いはじめる</h2>
+    <p>決済が終わると、すぐに有料会員の機能が使えるようになります。</p>
+    <ul>
+      <li>人脈マップ全体・DM無制限・学習コンテンツ全部などが解放されます</li>
+      <li>次の月からは、毎月同じ日に自動でお支払いが続きます</li>
+      <li>マイページに「有料プラン加入中（カード決済）」と、次回の更新日が表示されます</li>
+    </ul>
+  </div>
+  <div class="mock" aria-hidden="true">
+    <div class="mock-cap">画面の見本</div>
+    <div class="card done">
+      <div class="check">✓</div>
+      <b>💳 有料プラン加入中（カード決済）</b>
+      <small style="color:var(--muted)">次回の更新日は ○○○○/○○/○○ です。</small>
+    </div>
+  </div>
+</li>
+</ol>
+
+<section class="after">
+  <h2>登録したあとのこと</h2>
+  <div class="qa">
+    <div>
+      <h3>解約・カード変更・領収書</h3>
+      <p>マイページの「プランを管理（解約・カード変更・領収書）」からできます。</p>
+    </div>
+    <div>
+      <h3>解約のタイミング</h3>
+      <p>次回の更新日の前日23:59までに手続きすれば、次の月からのお支払いは止まります。月の途中で解約しても、日割りや返金はありません。</p>
+    </div>
+    <div>
+      <h3>お友だちを紹介するとき</h3>
+      <p>マイページの「あなたの招待リンク」から、URLのコピー・LINEで送る・QRコードで紹介できます。</p>
+    </div>
+  </div>
+  <p class="contact">わからないことがあれば、アプリ内の「AI窓口に相談する」か、<a href="https://zlink-biz.com/contact.html">お問い合わせフォーム</a>（メール：<span class="sel">info@zlink-biz.com</span>）からご連絡ください。<br>運営：ZIPANG.DAO合同会社</p>
+</section>
+</div>
+
+</body>
+</html>
