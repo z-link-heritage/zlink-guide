@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>報酬Agent登録ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<style>
+/* Layout: スマホ1カラム。赤い帯のヘッダー → 支払条件4つ → 登録3ステップ → 準備物 → よくある質問 → 問い合わせ */
+:root{
+  --red:#E60012; --red-ink:#B8000E; --red-soft:#FDECEE;
+  --bg:#F6F4F4; --surface:#FFFFFF; --fg:#1F1A1B; --muted:#6B6163; --line:#E7E1E2;
+  --on-red:#FFFFFF;
+  --f-display:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  --f-body:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --red:#E60012; --red-ink:#FF7A84; --red-soft:#3A1A1D;
+  --bg:#151213; --surface:#211C1D; --fg:#F2EDEE; --muted:#B3A8AA; --line:#3A3335; --on-red:#FFFFFF; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --red:#E60012; --red-ink:#FF7A84; --red-soft:#3A1A1D;
+  --bg:#151213; --surface:#211C1D; --fg:#F2EDEE; --muted:#B3A8AA; --line:#3A3335; --on-red:#FFFFFF; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{color-scheme:light}body{margin:0}img{max-width:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{background:var(--red);color:var(--on-red)}
+header .wrap{padding-block:28px 32px}
+.brand{font-family:var(--f-display);font-weight:900;font-size:12px;letter-spacing:.12em}
+h1{font-family:var(--f-display);font-weight:900;font-size:clamp(24px,6.4vw,30px);line-height:1.35;margin:8px 0 10px;text-wrap:balance}
+header p{margin:0;font-size:14px;opacity:.95}
+main .wrap{display:flex;flex-direction:column;gap:28px;padding-block:24px 40px}
+section{display:flex;flex-direction:column;gap:12px}
+h2{font-family:var(--f-display);font-weight:900;font-size:20px;line-height:1.4;margin:0;display:flex;align-items:center;gap:10px}
+h2::before{content:"";width:6px;height:1.1em;background:var(--red);border-radius:2px;flex:none}
+p{margin:0}
+.lead{color:var(--muted);font-size:14px}
+
+.conds{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.conds li{display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px}
+.num{width:36px;height:36px;border-radius:50%;background:var(--red-soft);color:var(--red-ink);font-family:var(--f-display);font-weight:900;font-size:17px;display:grid;place-items:center}
+.conds b{display:block;font-size:15px}
+.conds span{display:block;color:var(--muted);font-size:13px;line-height:1.6;margin-top:2px}
+.conds li.last{background:transparent;border-style:dashed}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;padding:12px 18px;border-radius:10px;background:var(--red);color:var(--on-red);font-weight:700;font-size:16px;text-decoration:none;text-align:center}
+.btn:focus-visible{outline:3px solid var(--fg);outline-offset:3px}
+.note{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px;line-height:1.7}
+.note strong{color:var(--red-ink)}
+
+.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.step{position:relative;padding:0 0 22px 48px}
+.step::before{content:"";position:absolute;left:17px;top:38px;bottom:0;width:2px;background:var(--line)}
+.step:last-child{padding-bottom:0}.step:last-child::before{display:none}
+.step .num{position:absolute;left:0;top:0;background:var(--red);color:var(--on-red)}
+.step h3{font-family:var(--f-display);font-weight:700;font-size:17px;margin:4px 0 6px;line-height:1.4}
+.step ul{margin:6px 0 0;padding-left:1.2em;font-size:14px}
+.step li{margin:2px 0}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--red-ink);background:var(--red-soft);border-radius:4px;padding:1px 6px;margin-left:6px;vertical-align:2px}
+
+.prep{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.prep div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.prep b{display:block;font-size:14px}
+.prep span{display:block;font-size:12.5px;color:var(--muted);line-height:1.55;margin-top:2px}
+@media (max-width:360px){.prep{grid-template-columns:1fr}}
+
+details{background:var(--surface);border:1px solid var(--line);border-radius:10px}
+details+details{margin-top:-4px}
+summary{cursor:pointer;list-style:none;padding:14px 44px 14px 14px;font-weight:700;font-size:14.5px;line-height:1.55;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"Q";color:var(--red-ink);font-family:var(--f-display);font-weight:900;margin-right:8px}
+summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;color:var(--muted)}
+details[open] summary::after{content:"−"}
+summary:focus-visible{outline:2px solid var(--red);outline-offset:-2px;border-radius:10px}
+details p{padding:0 14px 14px 14px;font-size:14px;color:var(--fg)}
+
+.shot{margin:10px 0 0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{font-size:12px;color:var(--muted);background:var(--surface);border-top:1px solid var(--line);padding:6px 10px;line-height:1.5}
+.line-card{display:grid;grid-template-columns:132px 1fr;gap:16px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.qr{width:132px;height:132px;background:#fff;border-radius:8px;padding:8px;display:grid;place-items:center}
+.qr canvas,.qr img{width:116px!important;height:116px!important}
+.line-card .btn{background:#06C755;min-height:46px;font-size:15px;margin-top:10px}
+@media (max-width:380px){.line-card{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.contact{background:var(--red-soft);border-radius:12px;padding:18px}
+.contact h2::before{display:none}
+footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.7}
+footer .wrap{padding-block:18px 28px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand">Z-LINK ／ ZIPANG.DAO</div>
+    <h1>報酬Agent登録と<br>報酬のお受け取りまで</h1>
+    <p>報酬Agentとして活動いただくには、下記3つの手続きが必要です。登録フォームの所要時間は約5分です。</p>
+  </div>
+</header>
+
+<main>
+<div class="wrap">
+
+  <section aria-labelledby="h-cond">
+    <h2 id="h-cond">登録の流れ</h2>
+    <ol class="conds">
+      <li><div class="num">1</div><div><b>Z-LINK有料会員への登録</b><span>まだの方は、先に有料会員登録をお済ませください。</span></div></li>
+      <li><div class="num">2</div><div><b>報酬Agent登録・個別業務委託契約の締結</b><span>下のボタンの登録フォームから手続きします。</span></div></li>
+      <li><div class="num">3</div><div><b>ZIPANG.DAO 1,000メンバーズ公式LINEへの登録</b><span>エージェントの皆さま向けの情報をお届けします。下の「公式LINEに登録する」から友だち追加できます。</span></div></li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-form">
+    <h2 id="h-form">登録フォームを開く</h2>
+    <a class="btn" id="form-link" href="https://script.google.com/macros/s/AKfycbyMt3IpjB9_7b3QUl-sSKoXpUfYsFIhYv6t1iDaJztMloTEe8SaIB5XqHFE9gApdHHs/exec" target="_blank" rel="noopener">報酬Agent登録・契約フォームへ</a>
+    <div class="note">フォームを開くと<strong>暗証番号</strong>の入力を求められます。暗証番号は、Z-LINK運営事務局からお送りしたご案内メッセージに記載しています。</div>
+    <figure class="shot"><img src="img/s0-pin.png" alt="暗証番号の入力画面。暗証番号を入力して「入室する」を押します" width="830" height="472" loading="lazy"><figcaption>最初の画面：暗証番号を入力して「入室する」を押します</figcaption></figure>
+  </section>
+
+  <section aria-labelledby="h-steps">
+    <h2 id="h-steps">フォームの進め方</h2>
+    <ol class="steps">
+      <li class="step"><div class="num">1</div>
+        <h3>契約内容の確認</h3>
+        <p>業務委託契約書を最後までスクロールすると、同意欄にチェックできるようになります。</p>
+        <ul>
+          <li>「業務委託契約書（紹介報酬型・Z-LINK有料会員向け）」への同意</li>
+          <li>反社会的勢力に該当しないことの表明・確約（契約書第14条）</li>
+        </ul>
+        <figure class="shot"><img src="img/s1-contract.png" alt="業務委託契約のご確認画面。契約書の下に同意欄が2つあります" width="729" height="862" loading="lazy"><figcaption>契約書を最後まで読むと、2つの同意欄にチェックできます</figcaption></figure>
+      </li>
+      <li class="step"><div class="num">2</div>
+        <h3>登録情報の入力</h3>
+        <p>入力内容は契約書の「乙（受託者）」欄と、報酬の振込先として使われます。</p>
+        <ul>
+          <li>基本情報：氏名、フリガナ、メールアドレス、携帯電話番号、生年月日、現在の職業</li>
+          <li>住所：郵便番号、住所</li>
+          <li>振込先口座：銀行名、支店名、口座種別、口座番号（7桁）、口座名義（カナ）<span class="tag">本人名義のみ</span></li>
+          <li>ご紹介者のお名前（フルネーム）。いない場合は「なし」</li>
+        </ul>
+        <figure class="shot"><img src="img/s2-input.png" alt="登録情報の入力画面。基本情報、住所、振込先口座、ご紹介者の欄があります" width="547" height="890" loading="lazy"><figcaption>「必須」の欄はすべて入力してください</figcaption></figure>
+      </li>
+      <li class="step"><div class="num">3</div>
+        <h3>確認・電子署名</h3>
+        <p>入力内容に誤りがないか確認し、署名欄に<b>登録した氏名と同じ表記</b>で氏名を入力します。「署名して送信する」を押すと、契約書に署名したものとして扱われます。</p>
+        <figure class="shot"><img src="img/s3-sign.png" alt="入力内容の確認と電子署名の画面。最後に「署名して送信する」を押します" width="547" height="750" loading="lazy"><figcaption>入力内容を確認し、署名欄に氏名を入れて「署名して送信する」を押します（画像の入力内容はぼかしています）</figcaption></figure>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="h-line">
+    <h2 id="h-line">公式LINEに登録する</h2>
+    <div class="line-card">
+      <div class="qr"><img src="img/line-qr.png" alt="ZIPANG.DAO 1,000メンバーズ公式LINEの友だち追加QRコード" width="540" height="540"></div>
+      <div>
+        <b>ZIPANG.DAO 1,000メンバーズ公式LINE</b>
+        <p class="lead">スマホの方はボタンから、パソコンの方はQRコードを読み取って友だち追加してください。</p>
+        <a class="btn" id="line-link" href="https://line.me/R/ti/p/@137pkupy" target="_blank" rel="noopener">友だち追加する</a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-prep">
+    <h2 id="h-prep">手元に用意するもの</h2>
+    <div class="prep">
+      <div><b>暗証番号</b><span>事務局からのご案内メッセージに記載</span></div>
+      <div><b>本人名義の口座情報</b><span>銀行・支店名、7桁の口座番号、カナ名義</span></div>
+      <div><b>ご紹介者のフルネーム</b><span>いない場合は「なし」と入力</span></div>
+      <div><b>メールアドレス</b><span>ご連絡に使用します</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-faq">
+    <h2 id="h-faq">よくあるご質問</h2>
+    <details><summary>暗証番号がわかりません</summary><p>Z-LINK公式LINEのチャットからお問い合わせください。ご本人確認のうえご案内します。</p></details>
+    <details><summary>報酬はいつ振り込まれますか？</summary><p>3つの手続きが済み、事務局で登録・契約内容の確認が完了した方から、お振込みについて個別にご案内します。</p></details>
+    <details><summary>家族名義の口座で受け取れますか？</summary><p>報酬はご本人名義の口座にお振込みします。ご本人名義の口座をご登録ください。</p></details>
+    <details><summary>ご紹介者がいない場合はどうすればいいですか？</summary><p>「ご紹介者のお名前」欄に「なし」と入力してください。</p></details>
+    <details><summary>送信後に入力の間違いに気づきました</summary><p>再送信はせず、Z-LINK公式LINEのチャットで、お名前と訂正したい内容をお知らせください。</p></details>
+  </section>
+
+  <section class="contact" aria-labelledby="h-contact">
+    <h2 id="h-contact">お問い合わせ</h2>
+    <p>ご不明な点は、Z-LINK公式LINEのチャットからお気軽にお問い合わせください。</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Z-LINK運営事務局（ZIPANG.DAO合同会社）<br>
+    東京都千代田区神田神保町1-9 KOALABLDG.JIMBOCHO 8F<br>
+    ご入力いただいた個人情報は、業務委託契約の締結・報酬のお支払い・ご連絡のためにのみ利用します。
+  </div>
+</footer>
+
+</body>
+</html>
