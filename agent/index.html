@@ -76,6 +76,10 @@ summary::after{content:"+";position:absolute;right:16px;top:50%;transform:transl
 details[open] summary::after{content:"−"}
 summary:focus-visible{outline:2px solid var(--red);outline-offset:-2px;border-radius:10px}
 details p{padding:0 14px 14px 14px;font-size:14px;color:var(--fg)}
+.faq-body{padding:0 14px 14px;font-size:14px;display:flex;flex-direction:column;gap:4px}
+.faq-body p{padding:0}
+.faq-body ol{margin:0 0 8px;padding-left:1.4em}
+.faq-body li{margin:2px 0}
 
 .urlbox{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
 .urlbox-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em}
@@ -182,7 +186,7 @@ footer .wrap{padding-block:18px 28px}
   <section aria-labelledby="h-faq">
     <h2 id="h-faq">よくあるご質問</h2>
     <details><summary>暗証番号がわかりません</summary><p>Z-LINK公式LINEのチャットからお問い合わせください。ご本人確認のうえご案内します。</p></details>
-    <details><summary>報酬はいつ振り込まれますか？</summary><p>3つの手続きが済み、事務局で登録・契約内容の確認が完了した方から、お振込みについて個別にご案内します。</p></details>
+    <details><summary>報酬の支払い条件と支払日を教えてください</summary><div class="faq-body"><p><b>支払い条件</b></p><ol><li>Z-LINK有料会員であること</li><li>業務委託契約の締結（同意）が完了していること</li><li>ZIPANG.DAO 1,000メンバーズ公式LINEに登録していること</li></ol><p><b>支払日</b></p><p>当月末締め・翌月末払いです。月末が土日祝日の場合は、翌月の最初の平日にお振込みします。</p></div></details>
     <details><summary>家族名義の口座で受け取れますか？</summary><p>報酬はご本人名義の口座にお振込みします。ご本人名義の口座をご登録ください。</p></details>
     <details><summary>ご紹介者がいない場合はどうすればいいですか？</summary><p>「ご紹介者のお名前」欄に「なし」と入力してください。</p></details>
     <details><summary>送信後に入力の間違いに気づきました</summary><p>再送信はせず、Z-LINK公式LINEのチャットで、お名前と訂正したい内容をお知らせください。</p></details>
